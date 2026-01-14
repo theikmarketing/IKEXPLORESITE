@@ -533,6 +533,30 @@ export default function AdminDashboardPage() {
                   <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">저장</button>
                 </div>
               </form>
+              <div className="mt-6 border-t pt-4">
+                <h3 className="text-lg font-semibold mb-2">미리보기</h3>
+                <div className="bg-gray-50 rounded-md p-4 space-y-4">
+                  <div>
+                    <h4 className="text-xl font-bold">{aboutHeroTitle || "About Us"}</h4>
+                    <p className="text-gray-600">{aboutHeroSubtitle || "Your trusted partner for discovering Korea"}</p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Our Story</h5>
+                    <p className="text-gray-700">{aboutStory || "스토리 내용을 입력하세요."}</p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Our Mission</h5>
+                    <p className="text-gray-700">{aboutMission || "미션 내용을 입력하세요."}</p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Why Choose Us</h5>
+                    <ul className="list-disc pl-5 text-gray-700">
+                      {aboutReasonsText.split('\n').filter(Boolean).map((r, i) => (<li key={i}>{r}</li>))}
+                      {aboutReasonsText.split('\n').filter(Boolean).length === 0 && <li>이유 항목을 추가하세요.</li>}
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="bg-white rounded-lg shadow-md p-6">
@@ -558,6 +582,31 @@ export default function AdminDashboardPage() {
                   <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">저장</button>
                 </div>
               </form>
+              <div className="mt-6 border-t pt-4">
+                <h3 className="text-lg font-semibold mb-2">미리보기</h3>
+                <div className="bg-gray-50 rounded-md p-4 space-y-4">
+                  <div>
+                    <h5 className="font-semibold mb-1">Email</h5>
+                    <p className="text-gray-700">{contactEmail || "info@ikexplore.com"}</p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Phone</h5>
+                    <p className="text-gray-700">{contactPhone || "+82-2-1234-5678"}</p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Address</h5>
+                    <p className="text-gray-700 whitespace-pre-line">
+                      {(contactAddressText || "123 Travel Street\nSeoul, South Korea 04567")}
+                    </p>
+                  </div>
+                  <div>
+                    <h5 className="font-semibold mb-1">Business Hours</h5>
+                    <p className="text-gray-700 whitespace-pre-line">
+                      {(contactBusinessHoursText || "Monday - Friday: 9:00 AM - 6:00 PM\nSaturday: 10:00 AM - 4:00 PM\nSunday: Closed")}
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         )}
