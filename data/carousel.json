@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "url": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=1920&h=1080&fit=crop",
+    "title": "Explore Historic Palaces",
+    "description": "Discover the rich history of Korea's royal palaces"
+  },
+  {
+    "id": 2,
+    "url": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1920&h=1080&fit=crop",
+    "title": "Natural Wonders",
+    "description": "Experience the breathtaking beauty of Korea's nature"
+  },
+  {
+    "id": 3,
+    "url": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=1920&h=1080&fit=crop",
+    "title": "Coastal Adventures",
+    "description": "Enjoy stunning coastal views and fresh seafood"
+  },
+  {
+    "id": 4,
+    "url": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=1920&h=1080&fit=crop",
+    "title": "Cultural Experiences",
+    "description": "Immerse yourself in Korean culture and traditions"
+  }
+]

@@ -1,0 +1,165 @@
+[
+  {
+    "id": 1,
+    "title": "Seoul City Tour",
+    "description": "Explore the vibrant capital city of Korea with visits to Gyeongbokgung Palace, Bukchon Hanok Village, and N Seoul Tower.",
+    "price": 89,
+    "duration": "1 Day",
+    "image": "https://images.unsplash.com/photo-1517154421773-0529f29ea451?w=800&h=600&fit=crop",
+    "highlights": [
+      "Visit Gyeongbokgung Palace",
+      "Explore Bukchon Hanok Village",
+      "Experience N Seoul Tower",
+      "Traditional Korean lunch included"
+    ],
+    "itinerary": [
+      "09:00 - Hotel pickup",
+      "10:00 - Gyeongbokgung Palace tour",
+      "12:00 - Traditional Korean lunch",
+      "14:00 - Bukchon Hanok Village walk",
+      "16:00 - N Seoul Tower visit",
+      "18:00 - Return to hotel"
+    ],
+    "included": [
+      "Professional English-speaking guide",
+      "Entrance fees",
+      "Traditional Korean lunch",
+      "Hotel pickup and drop-off",
+      "Transportation"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Jeju Island Adventure",
+    "description": "Discover the natural wonders of Jeju Island including Seongsan Ilchulbong, Manjanggul Cave, and beautiful beaches.",
+    "price": 299,
+    "duration": "3 Days",
+    "image": "https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&h=600&fit=crop",
+    "highlights": [
+      "Seongsan Ilchulbong (Sunrise Peak)",
+      "Manjanggul Lava Tube Cave",
+      "Jeju beaches and waterfalls",
+      "Local seafood experience"
+    ],
+    "itinerary": [
+      "Day 1: Arrival, Seongsan Ilchulbong, local market",
+      "Day 2: Manjanggul Cave, waterfalls, beach time",
+      "Day 3: Hallasan Mountain, departure"
+    ],
+    "included": [
+      "2 nights accommodation",
+      "All meals",
+      "Professional guide",
+      "All entrance fees",
+      "Transportation"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Busan Coastal Experience",
+    "description": "Enjoy the coastal city of Busan with Haeundae Beach, Gamcheon Culture Village, and fresh seafood markets.",
+    "price": 199,
+    "duration": "2 Days",
+    "image": "http://localhost:3000/uploads/1768277726105_20191229160530047_oen.jpg",
+    "highlights": [
+      "Haeundae Beach",
+      "Gamcheon Culture Village",
+      "Jagalchi Fish Market",
+      "Haedong Yonggungsa Temple"
+    ],
+    "itinerary": [
+      "Day 1: Haeundae Beach, seafood market, Gamcheon Village",
+      "Day 2: Haedong Yonggungsa Temple, city tour, departure"
+    ],
+    "included": [
+      "1 night accommodation",
+      "Breakfast and lunch",
+      "Guide service",
+      "Entrance fees",
+      "Transportation"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "DMZ & Panmunjom Tour",
+    "description": "Visit the Demilitarized Zone and learn about Korean history at the border between North and South Korea.",
+    "price": 149,
+    "duration": "1 Day",
+    "image": "https://images.unsplash.com/photo-1547036967-23d11aacaee0?w=800&h=600&fit=crop",
+    "highlights": [
+      "DMZ area visit",
+      "Panmunjom (Joint Security Area)",
+      "Third Infiltration Tunnel",
+      "Dora Observatory"
+    ],
+    "itinerary": [
+      "08:00 - Hotel pickup",
+      "10:00 - DMZ area tour",
+      "12:00 - Lunch",
+      "14:00 - Panmunjom visit",
+      "16:00 - Third Infiltration Tunnel",
+      "18:00 - Return to Seoul"
+    ],
+    "included": [
+      "Professional guide",
+      "All entrance fees",
+      "Lunch",
+      "Hotel pickup and drop-off",
+      "Transportation"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Gyeongju Historical Tour",
+    "description": "Step back in time to ancient Korea with visits to Bulguksa Temple, Seokguram Grotto, and royal tombs.",
+    "price": 179,
+    "duration": "2 Days",
+    "image": "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&h=600&fit=crop",
+    "highlights": [
+      "Bulguksa Temple",
+      "Seokguram Grotto",
+      "Cheomseongdae Observatory",
+      "Royal tombs of Silla"
+    ],
+    "itinerary": [
+      "Day 1: Bulguksa Temple, Seokguram Grotto, Anapji Pond",
+      "Day 2: Cheomseongdae, Royal tombs, Gyeongju National Museum"
+    ],
+    "included": [
+      "1 night accommodation",
+      "All meals",
+      "Guide service",
+      "Entrance fees",
+      "Transportation"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Korean Food & Culture",
+    "description": "Immerse yourself in Korean cuisine with cooking classes, traditional markets, and cultural performances.",
+    "price": 129,
+    "duration": "1 Day",
+    "image": "https://images.unsplash.com/photo-1551218808-94e220e084d2?w=800&h=600&fit=crop",
+    "highlights": [
+      "Korean cooking class",
+      "Traditional market visit",
+      "Cultural performance",
+      "Traditional tea ceremony"
+    ],
+    "itinerary": [
+      "09:00 - Traditional market tour",
+      "11:00 - Korean cooking class",
+      "13:00 - Lunch (cooked dishes)",
+      "15:00 - Cultural performance",
+      "17:00 - Traditional tea ceremony",
+      "18:00 - End of tour"
+    ],
+    "included": [
+      "Cooking class materials",
+      "Lunch",
+      "Cultural performance ticket",
+      "Tea ceremony",
+      "Professional guide"
+    ]
+  }
+]
