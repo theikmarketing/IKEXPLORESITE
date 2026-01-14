@@ -20,7 +20,7 @@ export default function AdminDashboardPage() {
   const [tours, setTours] = useState<Tour[]>([]);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
-  const [activeTab, setActiveTab] = useState<"carousel" | "tours" | "add-tour" | "security">("carousel");
+  const [activeTab, setActiveTab] = useState<"carousel" | "tours" | "add-tour" | "pages" | "security">("carousel");
   
   const [newTour, setNewTour] = useState({
     title: "",
@@ -54,10 +54,21 @@ export default function AdminDashboardPage() {
 
   const [tourImages, setTourImages] = useState<Record<number, string>>({});
   const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
+  const [aboutHeroTitle, setAboutHeroTitle] = useState("");
+  const [aboutHeroSubtitle, setAboutHeroSubtitle] = useState("");
+  const [aboutStory, setAboutStory] = useState("");
+  const [aboutMission, setAboutMission] = useState("");
+  const [aboutReasonsText, setAboutReasonsText] = useState("");
+  const [contactEmail, setContactEmail] = useState("");
+  const [contactPhone, setContactPhone] = useState("");
+  const [contactAddressText, setContactAddressText] = useState("");
+  const [contactBusinessHoursText, setContactBusinessHoursText] = useState("");
 
   useEffect(() => {
     fetchTours();
     fetchCarousel();
+    fetchAbout();
+    fetchContact();
   }, []);
 
   const fetchTours = async () => {
@@ -70,6 +81,37 @@ export default function AdminDashboardPage() {
     } catch (error) {
       console.error('Failed to fetch tours:', error);
     }
+  };
+
+  const fetchAbout = async () => {
+    try {
+      const res = await fetch('/api/content/about');
+      if (res.ok) {
+        const data = await res.json();
+        if (data) {
+          setAboutHeroTitle(data.heroTitle || "");
+          setAboutHeroSubtitle(data.heroSubtitle || "");
+          setAboutStory(data.story || "");
+          setAboutMission(data.mission || "");
+          setAboutReasonsText(Array.isArray(data.reasons) ? data.reasons.join('\n') : "");
+        }
+      }
+    } catch {}
+  };
+
+  const fetchContact = async () => {
+    try {
+      const res = await fetch('/api/content/contact');
+      if (res.ok) {
+        const data = await res.json();
+        if (data) {
+          setContactEmail(data.email || "");
+          setContactPhone(data.phone || "");
+          setContactAddressText(Array.isArray(data.addressLines) ? data.addressLines.join('\n') : "");
+          setContactBusinessHoursText(Array.isArray(data.businessHoursLines) ? data.businessHoursLines.join('\n') : "");
+        }
+      }
+    } catch {}
   };
 
   const fetchCarousel = async () => {
@@ -186,6 +228,55 @@ export default function AdminDashboardPage() {
     } finally {
       setUploadingIndex(null);
       e.target.value = "";
+    }
+  };
+
+  const handleSaveAbout = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        heroTitle: aboutHeroTitle,
+        heroSubtitle: aboutHeroSubtitle,
+        story: aboutStory,
+        mission: aboutMission,
+        reasons: aboutReasonsText.split('\n').filter(Boolean),
+      };
+      const res = await fetch('/api/content/about', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        alert('About 페이지 내용이 저장되었습니다.');
+      } else {
+        alert('About 저장에 실패했습니다.');
+      }
+    } catch {
+      alert('About 저장 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleSaveContact = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const payload = {
+        email: contactEmail,
+        phone: contactPhone,
+        addressLines: contactAddressText.split('\n').filter(Boolean),
+        businessHoursLines: contactBusinessHoursText.split('\n').filter(Boolean),
+      };
+      const res = await fetch('/api/content/contact', {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (res.ok) {
+        alert('Contact 페이지 내용이 저장되었습니다.');
+      } else {
+        alert('Contact 저장에 실패했습니다.');
+      }
+    } catch {
+      alert('Contact 저장 중 오류가 발생했습니다.');
     }
   };
 
@@ -354,6 +445,9 @@ export default function AdminDashboardPage() {
             <button onClick={() => setActiveTab("add-tour")} className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "add-tour" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>
               투어 추가
             </button>
+            <button onClick={() => setActiveTab("pages")} className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "pages" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>
+              페이지 관리
+            </button>
             <button onClick={() => setActiveTab("security")} className={`py-4 px-1 border-b-2 font-medium text-sm ${activeTab === "security" ? "border-blue-500 text-blue-600" : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300"}`}>
               보안 설정
             </button>
@@ -406,6 +500,64 @@ export default function AdminDashboardPage() {
                 <button onClick={handleSaveCarousel} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">변경사항 저장</button>
               </div>
               {uploading && <div className="flex items-center justify-center"><div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div></div>}
+            </div>
+          </div>
+        )}
+
+        {activeTab === "pages" && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold mb-4">About Us 내용</h2>
+              <form onSubmit={handleSaveAbout} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">헤더 제목</label>
+                  <input value={aboutHeroTitle} onChange={(e) => setAboutHeroTitle(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">헤더 서브제목</label>
+                  <input value={aboutHeroSubtitle} onChange={(e) => setAboutHeroSubtitle(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">스토리</label>
+                  <textarea value={aboutStory} onChange={(e) => setAboutStory(e.target.value)} rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">미션</label>
+                  <textarea value={aboutMission} onChange={(e) => setAboutMission(e.target.value)} rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">이유(줄바꿈으로 항목 구분)</label>
+                  <textarea value={aboutReasonsText} onChange={(e) => setAboutReasonsText(e.target.value)} rows={4} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div className="flex justify-end">
+                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">저장</button>
+                </div>
+              </form>
+            </div>
+
+            <div className="bg-white rounded-lg shadow-md p-6">
+              <h2 className="text-xl font-semibold mb-4">Contact Us 정보</h2>
+              <form onSubmit={handleSaveContact} className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                  <input value={contactEmail} onChange={(e) => setContactEmail(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">전화번호</label>
+                  <input value={contactPhone} onChange={(e) => setContactPhone(e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">주소(줄바꿈으로 항목 구분)</label>
+                  <textarea value={contactAddressText} onChange={(e) => setContactAddressText(e.target.value)} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">영업시간(줄바꿈으로 항목 구분)</label>
+                  <textarea value={contactBusinessHoursText} onChange={(e) => setContactBusinessHoursText(e.target.value)} rows={3} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                </div>
+                <div className="flex justify-end">
+                  <button type="submit" className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">저장</button>
+                </div>
+              </form>
             </div>
           </div>
         )}

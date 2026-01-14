@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import type { ContactInfo } from "@/lib/content";
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -11,6 +12,20 @@ export default function ContactPage() {
     message: "",
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [contactInfo, setContactInfo] = useState<ContactInfo | null>(null);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        const res = await fetch("/api/content/contact", { cache: "no-store" });
+        if (res.ok) {
+          const data = await res.json();
+          if (data) setContactInfo(data);
+        }
+      } catch {}
+    };
+    load();
+  }, []);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -61,25 +76,36 @@ export default function ContactPage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2">Email</h3>
-                  <p className="text-gray-600">info@ikexplore.com</p>
+                  <p className="text-gray-600">{contactInfo?.email || "info@ikexplore.com"}</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2">Phone</h3>
-                  <p className="text-gray-600">+82-2-1234-5678</p>
+                  <p className="text-gray-600">{contactInfo?.phone || "+82-2-1234-5678"}</p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2">Address</h3>
                   <p className="text-gray-600">
-                    123 Travel Street<br />
-                    Seoul, South Korea 04567
+                    {(contactInfo?.addressLines || ["123 Travel Street", "Seoul, South Korea 04567"]).map((line, idx) => (
+                      <span key={idx}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
                   </p>
                 </div>
                 <div>
                   <h3 className="font-semibold text-gray-800 mb-2">Business Hours</h3>
                   <p className="text-gray-600">
-                    Monday - Friday: 9:00 AM - 6:00 PM<br />
-                    Saturday: 10:00 AM - 4:00 PM<br />
-                    Sunday: Closed
+                    {(contactInfo?.businessHoursLines || [
+                      "Monday - Friday: 9:00 AM - 6:00 PM",
+                      "Saturday: 10:00 AM - 4:00 PM",
+                      "Sunday: Closed",
+                    ]).map((line, idx) => (
+                      <span key={idx}>
+                        {line}
+                        <br />
+                      </span>
+                    ))}
                   </p>
                 </div>
               </div>

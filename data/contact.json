@@ -1,0 +1,13 @@
+{
+  "email": "info@ikexplore.com",
+  "phone": "+82-2-1234-5678",
+  "addressLines": [
+    "123 Travel Street",
+    "Seoul, South Korea 04567"
+  ],
+  "businessHoursLines": [
+    "Monday - Friday: 9:00 AM - 6:00 PM",
+    "Saturday: 10:00 AM - 4:00 PM",
+    "Sunday: Closed"
+  ]
+}
