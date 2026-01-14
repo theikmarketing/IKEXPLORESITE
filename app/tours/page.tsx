@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getAllTours } from "@/lib/tours";
 import TourCard from "@/components/TourCard";
 
+export const dynamic = 'force-dynamic';
+
 export default async function ToursPage() {
   const tours = await getAllTours();
 

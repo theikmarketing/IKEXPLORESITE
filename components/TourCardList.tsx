@@ -1,6 +1,8 @@
 import TourCard from "./TourCard";
 import { getAllTours } from "@/lib/tours";
 
+export const dynamic = 'force-dynamic';
+
 export default async function TourCardList() {
   const tours = await getAllTours();
 

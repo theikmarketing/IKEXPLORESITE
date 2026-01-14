@@ -53,6 +53,7 @@ export default function AdminDashboardPage() {
   ]);
 
   const [tourImages, setTourImages] = useState<Record<number, string>>({});
+  const [uploadingIndex, setUploadingIndex] = useState<number | null>(null);
 
   useEffect(() => {
     fetchTours();
@@ -149,6 +150,42 @@ export default function AdminDashboardPage() {
     } catch (error) {
       console.error('Save carousel error:', error);
       alert('캐러셀 저장 중 오류가 발생했습니다.');
+    }
+  };
+
+  const handleAddCarouselImage = () => {
+    const nextId = carouselImages.length > 0 ? Math.max(...carouselImages.map(i => i.id)) + 1 : 1;
+    setCarouselImages([...carouselImages, { id: nextId, url: "", title: "", description: "" }]);
+  };
+
+  const handleUploadForCarouselIndex = async (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      alert("파일 크기는 10MB 이하여야 합니다.");
+      return;
+    }
+    setUploadingIndex(index);
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const response = await fetch("/api/upload", { method: "POST", body: formData });
+      const data = await response.json();
+      if (data.success) {
+        const fullUrl = data.url.startsWith('http') ? data.url : (typeof window !== 'undefined' ? window.location.origin + data.url : data.url);
+        const updated = [...carouselImages];
+        updated[index] = { ...updated[index], url: fullUrl };
+        setCarouselImages(updated);
+        alert("이미지 업로드 성공! 항목에 URL이 반영되었습니다.");
+      } else {
+        alert(`업로드 실패: ${data.error}`);
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      alert("이미지 업로드 중 오류가 발생했습니다.");
+    } finally {
+      setUploadingIndex(null);
+      e.target.value = "";
     }
   };
 
@@ -325,7 +362,12 @@ export default function AdminDashboardPage() {
 
         {activeTab === "carousel" && (
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="text-xl font-semibold mb-4">캐러셀 이미지 관리</h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-xl font-semibold">캐러셀 이미지 관리</h2>
+              <button onClick={handleAddCarouselImage} className="px-3 py-2 bg-gray-800 text-white rounded-md hover:bg-gray-900 text-sm">
+                이미지 추가
+              </button>
+            </div>
             <div className="space-y-6">
               {carouselImages.map((image, index) => (
                 <div key={image.id} className="border border-gray-200 rounded-lg p-4">
@@ -340,6 +382,10 @@ export default function AdminDashboardPage() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">이미지 URL</label>
                       <input type="text" value={image.url} onChange={(e) => handleCarouselImageUpdate(index, "url", e.target.value)} className="w-full px-3 py-2 border border-gray-300 rounded-md" />
+                      <div className="mt-2 flex items-center gap-2">
+                        <input type="file" accept="image/*" onChange={(e) => handleUploadForCarouselIndex(index, e)} className="text-sm" />
+                        {uploadingIndex === index && <span className="text-xs text-gray-600">업로드 중...</span>}
+                      </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">제목</label>
@@ -496,4 +542,3 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
-
